@@ -1,5 +1,5 @@
-# judge which cmake codes to use 
-if(ROS_EDITION STREQUAL "ROS1")
+# judge which cmake codes to use
+if($ENV{ROS_VERSION} STREQUAL "1")
 
   # Copyright(c) 2019 livoxtech limited.
 
@@ -184,7 +184,7 @@ if(ROS_EDITION STREQUAL "ROS1")
   #---------------------------------------------------------------------------------------
 
 
-else(ROS_EDITION STREQUAL "ROS2")
+else($ENV{ROS_VERSION} STREQUAL "2")
 
   # Copyright(c) 2020 livoxtech limited.
 
