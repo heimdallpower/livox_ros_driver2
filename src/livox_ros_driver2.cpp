@@ -39,6 +39,17 @@
 using namespace livox_ros;
 
 #ifdef BUILDING_ROS1
+namespace
+{
+  bool IsPTPDActive()
+  {
+    std::string command{"systemctl is-active --quiet ptpd.service"};
+    int result{system(command.c_str())};
+
+    return (result == 0);
+  }
+}
+
 int main(int argc, char **argv) {
   /** Ros related */
   if (ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug)) {
@@ -218,15 +229,4 @@ void DriverNode::ImuDataPollThread()
     lddc_ptr_->DistributeImuData();
     status = future_.wait_for(std::chrono::microseconds(0));
   } while (status == std::future_status::timeout);
-}
-
-namespace
-{
-  bool IsPTPDActive()
-  {
-    std::string command{"systemctl is-active --quiet ptpd.service"};
-    int result{system(command.c_str())};
-
-    return (result == 0);
-  }
 }
