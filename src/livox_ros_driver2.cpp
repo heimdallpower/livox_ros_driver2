@@ -27,6 +27,8 @@
 #include <vector>
 #include <csignal>
 #include <thread>
+#include <string>
+#include <cstdlib>
 
 #include "include/livox_ros_driver2.h"
 #include "include/ros_headers.h"
@@ -49,6 +51,11 @@ int main(int argc, char **argv) {
   livox_ros::DriverNode livox_node;
 
   DRIVER_INFO(livox_node, "Livox Ros Driver2 Version: %s", LIVOX_ROS_DRIVER2_VERSION_STRING);
+
+  while (!IsPTPDActive()) {
+    DRIVER_WARN(livox_node, "PTPD service is not active, waiting to initialize.");
+    sleep(1);
+  }
 
   /** Init default system parameter */
   int xfer_format = kPointCloud2Msg;
@@ -213,23 +220,13 @@ void DriverNode::ImuDataPollThread()
   } while (status == std::future_status::timeout);
 }
 
+namespace
+{
+  bool IsPTPDActive()
+  {
+    std::string command{"systemctl is-active --quiet ptpd.service"};
+    int result{system(command.c_str())};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return (result == 0);
+  }
+}
