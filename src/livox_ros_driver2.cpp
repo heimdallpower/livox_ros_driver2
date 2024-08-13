@@ -118,6 +118,7 @@ int main(int argc, char **argv) {
       DRIVER_INFO(livox_node, "Init lds lidar successfully!");
     } else {
       DRIVER_ERROR(livox_node, "Init lds lidar failed!");
+      ros::shutdown();
     }
   } else {
     DRIVER_ERROR(livox_node, "Invalid data src (%d), please check the launch file", data_src);
