@@ -314,6 +314,12 @@ void LivoxLidarCallback::EnableLivoxLidarImuDataCallback(livox_status status, ui
   }
 }
 
+void LivoxLidarCallback::SetStandbyModeCallback(const uint32_t handle,
+                                                const LivoxLidarInfo* info,
+                                                void* client_data) {
+  SetLivoxLidarWorkMode(handle, kLivoxLidarWakeUp, nullptr, nullptr);
+}
+
 LidarDevice* LivoxLidarCallback::GetLidarDevice(const uint32_t handle, void* client_data) {
   if (client_data == nullptr) {
     std::cout << "failed to get lidar device, client data is nullptr" << std::endl;

@@ -62,7 +62,7 @@ LdsLidar *g_lds_ldiar = nullptr;
 
 /** Lds lidar function -------------------------------------------------------*/
 LdsLidar::LdsLidar(double publish_freq)
-    : Lds(publish_freq, kSourceRawLidar), 
+    : Lds(publish_freq, kSourceRawLidar),
       auto_connect_mode_(true),
       whitelist_count_(0),
       is_initialized_(false) {
@@ -202,6 +202,7 @@ int LdsLidar::DeInitLdsLidar(void) {
   }
 
   if (lidar_summary_info_.lidar_type & kLivoxLidarType) {
+    SetLivoxLidarInfoChangeCallback(LivoxLidarCallback::SetStandbyModeCallback, g_lds_ldiar);
     LivoxLidarSdkUninit();
     printf("Livox Lidar SDK Deinit completely!\n");
   }
