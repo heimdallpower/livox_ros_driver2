@@ -202,7 +202,7 @@ int LdsLidar::DeInitLdsLidar(void) {
   }
 
   if (lidar_summary_info_.lidar_type & kLivoxLidarType) {
-    SetLivoxLidarInfoChangeCallback(LivoxLidarCallback::SetStandbyModeCallback, g_lds_ldiar);
+    SetLivoxLidarWorkMode(g_lds_ldiar->lidars_[0].handle, kLivoxLidarWakeUp, nullptr, nullptr);
     LivoxLidarSdkUninit();
     printf("Livox Lidar SDK Deinit completely!\n");
   }
