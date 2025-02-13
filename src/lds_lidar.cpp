@@ -210,9 +210,9 @@ int LdsLidar::DeInitLdsLidar(void) {
 }
 
 void LdsLidar::setStandbyMode() {
-  for (uint32_t i = 0; i < lidar_count_; i++)
-  {
-    SetLivoxLidarWorkMode(lidars_[i].handle, kLivoxLidarWakeUp, nullptr, nullptr);
+  for (uint32_t i = 0; i < lidar_count_; i++) {
+    if (lidars_[i].lidar_type == kLivoxLidarType)
+      SetLivoxLidarWorkMode(lidars_[i].handle, kLivoxLidarWakeUp, nullptr, nullptr);
   }
 }
 
