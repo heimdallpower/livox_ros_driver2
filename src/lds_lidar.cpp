@@ -202,7 +202,6 @@ int LdsLidar::DeInitLdsLidar(void) {
   }
 
   if (lidar_summary_info_.lidar_type & kLivoxLidarType) {
-    SetLivoxLidarWorkMode(g_lds_ldiar->lidars_[0].handle, kLivoxLidarWakeUp, nullptr, nullptr);
     LivoxLidarSdkUninit();
     printf("Livox Lidar SDK Deinit completely!\n");
   }
@@ -210,6 +209,16 @@ int LdsLidar::DeInitLdsLidar(void) {
   return 0;
 }
 
-void LdsLidar::PrepareExit(void) { DeInitLdsLidar(); }
+void LdsLidar::setStandbyMode() {
+  for (uint32_t i = 0; i < lidar_count_; i++)
+  {
+    SetLivoxLidarWorkMode(lidars_[i].handle, kLivoxLidarWakeUp, nullptr, nullptr);
+  }
+}
+
+void LdsLidar::PrepareExit(void) {
+  setStandbyMode();
+  DeInitLdsLidar();
+}
 
 }  // namespace livox_ros

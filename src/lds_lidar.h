@@ -75,6 +75,8 @@ class LdsLidar final : public Lds {
   void DisableAutoConnectMode(void) { auto_connect_mode_ = false; }
   bool IsAutoConnectMode(void) { return auto_connect_mode_; }
 
+  void setStandbyMode();
+
   virtual void PrepareExit(void);
 
  public:
