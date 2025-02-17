@@ -14,6 +14,11 @@ if($ENV{ROS_VERSION} STREQUAL "1")
   message(STATUS "livox_ros_driver2 version: ${LIVOX_ROS_DRIVER2_VERSION}")
 
   #---------------------------------------------------------------------------------------
+  # Create compile_commands.json required by clangd language server
+  #---------------------------------------------------------------------------------------
+  set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+  #---------------------------------------------------------------------------------------
   # Add ROS Version MACRO
   #---------------------------------------------------------------------------------------
   add_definitions(-DBUILDING_ROS1)

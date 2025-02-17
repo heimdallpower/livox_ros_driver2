@@ -62,7 +62,7 @@ LdsLidar *g_lds_ldiar = nullptr;
 
 /** Lds lidar function -------------------------------------------------------*/
 LdsLidar::LdsLidar(double publish_freq)
-    : Lds(publish_freq, kSourceRawLidar), 
+    : Lds(publish_freq, kSourceRawLidar),
       auto_connect_mode_(true),
       whitelist_count_(0),
       is_initialized_(false) {
@@ -209,6 +209,16 @@ int LdsLidar::DeInitLdsLidar(void) {
   return 0;
 }
 
-void LdsLidar::PrepareExit(void) { DeInitLdsLidar(); }
+void LdsLidar::setStandbyMode() {
+  for (uint32_t i = 0; i < lidar_count_; i++) {
+    if (lidars_[i].lidar_type == kLivoxLidarType)
+      SetLivoxLidarWorkMode(lidars_[i].handle, kLivoxLidarWakeUp, nullptr, nullptr);
+  }
+}
+
+void LdsLidar::PrepareExit(void) {
+  setStandbyMode();
+  DeInitLdsLidar();
+}
 
 }  // namespace livox_ros
